@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { BASE_URL } from "../lib/api";
 
 export interface MissingFields {
@@ -11,11 +12,14 @@ export function useProfileCompletion() {
   const [missingFields, setMissingFields] = useState<MissingFields>({ photo: false, document: false });
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState<"photo" | "document" | null>(null);
+  const pathname = usePathname();
 
   const fetchProfile = useCallback(async () => {
     try {
       const token = localStorage.getItem("cc_token");
       if (!token) {
+        setCompletionPercentage(0);
+        setMissingFields({ photo: false, document: false });
         setLoading(false);
         return;
       }
@@ -57,7 +61,7 @@ export function useProfileCompletion() {
 
   useEffect(() => {
     fetchProfile();
-  }, [fetchProfile]);
+  }, [fetchProfile, pathname]);
 
   const uploadFile = async (file: File, type: "photo" | "document") => {
     setUploading(type);
