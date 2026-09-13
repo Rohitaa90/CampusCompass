@@ -67,7 +67,7 @@ export default function CollegesPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F3EE] pt-24 pb-16 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-4xl text-[#16213E] mb-2" style={{ fontFamily: "var(--font-display)" }}>
