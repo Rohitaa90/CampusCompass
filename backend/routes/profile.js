@@ -6,6 +6,7 @@
 import express from "express";
 import verifyToken from "../middleware/auth.js";
 import StudentProfile from "../models/StudentProfile.js";
+import { getPresignedGetUrl } from "../utils/s3.js";
 
 const router = express.Router();
 
@@ -62,7 +63,17 @@ router.get("/", async (req, res) => {
       return res.status(404).json({ message: "Profile not found. Please create one first." });
     }
 
-    res.status(200).json({ profile });
+    // Generate temporary presigned URLs for private files
+    const profileObj = profile.toObject();
+    
+    if (profileObj.photoUrl) {
+      profileObj.photoUrl = await getPresignedGetUrl(profileObj.photoUrl);
+    }
+    if (profileObj.documentUrl) {
+      profileObj.documentUrl = await getPresignedGetUrl(profileObj.documentUrl);
+    }
+
+    res.status(200).json({ profile: profileObj });
   } catch (err) {
     console.error("Profile fetch error:", err);
     res.status(500).json({ message: "Server error while fetching profile." });
@@ -86,15 +97,20 @@ router.patch("/file", async (req, res) => {
     // Dynamically decide which field to update based on type
     const fieldToUpdate = type === "photo" ? "photoUrl" : "documentUrl";
 
+    // Update the database with just the raw fileKey (keeps it private/portable)
     const profile = await StudentProfile.findOneAndUpdate(
       { user: req.user.userId },
-      { $set: { [fieldToUpdate]: fileKey } }, // Dynamic key using computed property
+      { $set: { [fieldToUpdate]: fileKey } }, 
       { new: true, upsert: true }
     );
+    
+    // Generate a fresh presigned URL for the frontend to render immediately
+    const profileObj = profile.toObject();
+    profileObj[fieldToUpdate] = await getPresignedGetUrl(fileKey);
 
     res.status(200).json({
-      message: `${type === "photo" ? "Photo" : "Document"} URL updated successfully.`,
-      profile,
+      message: `${type === "photo" ? "Photo" : "Document"} uploaded and secured.`,
+      profile: profileObj,
     });
   } catch (err) {
     console.error("File URL update error:", err);

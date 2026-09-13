@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --font-display: var(--font-sora), system-ui, sans-serif;
+  --font-body:    var(--font-sora), system-ui, sans-serif;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sora), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sora), system-ui, sans-serif;
+}
+
+/* ─── Chat message formatting ────────────────────────────────────────────────── */
+.ai-message-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content p {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Infinite Marquee Animation ─────────────────────────────────────────────── */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Breathing Neon Glow Animation ────────────────────────────────────────── */
+@keyframes neon-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(224, 156, 45, 0.4)) drop-shadow(0 0 10px rgba(224, 156, 45, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(224, 156, 45, 0.8)) drop-shadow(0 0 20px rgba(224, 156, 45, 0.5));
+  }
+}
+.animate-neon-glow {
+  animation: neon-glow 2.5s ease-in-out infinite;
+}
+
+/* ─── Rainbow Border Animation for AI Features ─────────────────────────────── */
+@keyframes rainbow-border {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.rainbow-border-wrapper {
+  background: linear-gradient(90deg, 
+    #ff2a2a, #ff7a00, #ffde00, #00f376, #00d2ff, #7300ff, #ff00c8, #ff2a2a
+  );
+  background-size: 200% 100%;
+  animation: rainbow-border 3s linear infinite;
+}

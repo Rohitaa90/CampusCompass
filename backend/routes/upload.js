@@ -5,27 +5,11 @@ import express from "express";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import { getS3Client } from "../utils/s3.js";
+
 import verifyToken from "../middleware/auth.js";
 
 const router = express.Router();
-
-// ─── Lazy S3 client ──────────────────────────────────────────────────────────
-// Created on first use, not at import time, for the same reason as the Groq client:
-// ES modules are evaluated before server.js calls dotenv.config(), so
-// process.env.AWS_* would be undefined if we instantiated at the top level.
-let s3Client = null;
-const getS3Client = () => {
-  if (!s3Client) {
-    s3Client = new S3Client({
-      region: process.env.AWS_REGION,
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      },
-    });
-  }
-  return s3Client;
-};
 
 // ─── POST /api/upload/presign ─────────────────────────────────────────────────
 // Flow:
