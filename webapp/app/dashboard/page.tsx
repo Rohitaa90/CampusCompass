@@ -151,7 +151,7 @@ function Dashboard() {
                     }}
                   />
                   {profile?.photoUrl ? (
-                    <img src={`${profile.photoUrl}&t=${Date.now()}`} alt="Profile" className="w-full h-full object-cover" />
+                    <img src={profile.photoUrl} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
                     <div className="text-4xl font-bold text-slate-300">?</div>
                   )}
