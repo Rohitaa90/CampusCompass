@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "CampusCompass",
+    "slug": "campuscompass",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "campuscompass",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.campuscompass.app"
+    },
+    "android": {
+      "package": "com.campuscompass.app"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "CampusCompass needs access to your photos to set a profile picture.",
+          "cameraPermission": "CampusCompass needs access to your camera to take a profile photo."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
