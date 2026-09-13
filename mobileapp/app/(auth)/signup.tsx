@@ -23,8 +23,16 @@ export default function SignupScreen() {
   const [error, setError] = useState('');
 
   async function handleSignup() {
-    if (!name || !email || !password) { setError('Please fill in all fields'); return; }
-    if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
+    if (!name || !email || !password) { 
+      setError('Please fill in all fields'); 
+      setTimeout(() => setError(''), 3000);
+      return; 
+    }
+    if (password.length < 6) { 
+      setError('Password must be at least 6 characters'); 
+      setTimeout(() => setError(''), 3000);
+      return; 
+    }
     setError('');
     setLoading(true);
     try {
@@ -34,6 +42,7 @@ export default function SignupScreen() {
       router.replace('/onboarding');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Signup failed');
+      setTimeout(() => setError(''), 3000);
     } finally {
       setLoading(false);
     }

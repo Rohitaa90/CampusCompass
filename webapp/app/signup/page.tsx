@@ -23,6 +23,7 @@ export default function SignupPage() {
       router.push("/onboarding");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Signup failed");
+      setTimeout(() => setError(""), 3000);
     } finally {
       setLoading(false);
     }

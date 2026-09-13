@@ -23,6 +23,7 @@ export default function LoginPage() {
       router.push("/");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Login failed");
+      setTimeout(() => setError(""), 3000);
     } finally {
       setLoading(false);
     }

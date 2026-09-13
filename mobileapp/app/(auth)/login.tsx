@@ -22,7 +22,11 @@ export default function LoginScreen() {
   const [error, setError] = useState('');
 
   async function handleLogin() {
-    if (!email || !password) { setError('Please fill in all fields'); return; }
+    if (!email || !password) { 
+      setError('Please fill in all fields'); 
+      setTimeout(() => setError(''), 3000);
+      return; 
+    }
     setError('');
     setLoading(true);
     try {
@@ -39,6 +43,7 @@ export default function LoginScreen() {
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Login failed');
+      setTimeout(() => setError(''), 3000);
     } finally {
       setLoading(false);
     }
