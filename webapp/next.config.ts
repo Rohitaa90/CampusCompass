@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'campuscompass-uploads-rohit9044.s3.ap-south-1.amazonaws.com',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
