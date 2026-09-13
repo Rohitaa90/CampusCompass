@@ -16,6 +16,7 @@ The project includes a **Web Application**, a cross-platform **Mobile Applicatio
 *Web AI Counselor: Markdown-powered AI chat assistance*
 
 ### Mobile Application
+> **Note:** The mobile app is currently built and optimized for Android only.
 ![Mobile Colleges Feed](assets/mobile-app-colleges-feed.png)
 *Mobile App: Infinite scrolling colleges feed*
 
