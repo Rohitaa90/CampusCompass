@@ -2,7 +2,7 @@
 // All protected calls automatically attach the JWT from localStorage.
 // Base URL comes from the NEXT_PUBLIC_API_URL env variable.
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 // ─── Helper: build headers ────────────────────────────────────────────────────
 // Reads the token from localStorage (only runs client-side).

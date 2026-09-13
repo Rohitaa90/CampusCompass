@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { BASE_URL } from "../lib/api";
 
 export interface MissingFields {
   photo: boolean;
@@ -19,7 +20,7 @@ export function useProfileCompletion() {
         return;
       }
 
-      const res = await fetch("http://localhost:5000/api/profile", {
+      const res = await fetch(`${BASE_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -65,7 +66,7 @@ export function useProfileCompletion() {
       if (!token) throw new Error("Not authenticated");
 
       // 1. Get presigned URL
-      const presignRes = await fetch("http://localhost:5000/api/upload/presign", {
+      const presignRes = await fetch(`${BASE_URL}/upload/presign`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +90,7 @@ export function useProfileCompletion() {
       if (!uploadRes.ok) throw new Error("Failed to upload file to S3");
 
       // 3. Update profile with file key
-      const patchRes = await fetch("http://localhost:5000/api/profile/file", {
+      const patchRes = await fetch(`${BASE_URL}/profile/file`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
